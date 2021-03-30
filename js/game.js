@@ -1,8 +1,12 @@
 let canvas = document.getElementById("game");
 let ctx = canvas.getContext("2d");
 
+let canvasScore = document.getElementById("score");
+let ctxScore = canvasScore.getContext("2d");
+
 let grid = 20;
 let count = 0;
+let score = 0;
 
 let snake = { // змейка
 // начальные координаты
@@ -34,6 +38,7 @@ function game() {
 
     count = 0;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctxScore.clearRect(0, 0, canvasScore.width, canvasScore.height);
 
     snake.x += snake.vx;
     snake.y += snake.vy;
@@ -72,6 +77,7 @@ function game() {
             snake.maxCells++;
             food.x = getRandomInt(0, 25) * grid;
             food.y = getRandomInt(0, 25) * grid;
+            score++;
         }
         // Проверяем, не столкнулась ли змейка сама с собой
         // Для этого перебираем весь массив и смотрим, есть ли у нас в массиве змейки две клетки с одинаковыми координатами
@@ -85,12 +91,17 @@ function game() {
                     snake.maxCells = 4;
                     snake.vx = grid;
                     snake.vy = 0;
+                    score = 0;
                     // Ставим еду в случайное место
                     food.x = getRandomInt(0, 25) * grid;
                     food.y = getRandomInt(0, 25) * grid;
             }
         }
     });
+
+    ctxScore.fillStyle = "white";
+    ctxScore.font = "30px Arial";
+    ctxScore.fillText("Score: " + score, 20, 50);
 }
 
 // Обработчик событий нажатия на стрелки
@@ -118,6 +129,3 @@ document.addEventListener("keydown", function (e){
 })
 
 requestAnimationFrame(game);
-
-
-
