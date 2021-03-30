@@ -1,0 +1,2 @@
+# SnakeGame
+just training js
